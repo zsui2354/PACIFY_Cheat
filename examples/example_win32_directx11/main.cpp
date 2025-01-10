@@ -38,6 +38,361 @@ void CreateRenderTarget();
 void CleanupRenderTarget();
 LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
+
+External_API mapi; 
+
+float Ypos2F;
+float Xpos2F;
+float Zpos2F;
+
+
+
+
+
+
+VOID CALLBACK TimerCallback(HWND hWnd, UINT uMsg, UINT_PTR idEvent, DWORD dwTime) {
+   // HWND myHandle = (HWND)idEvent; // 将idEvent转回为HWND句柄
+   // std::cout << "Function called from handle: " << myHandle << std::endl;
+    std::cout << "TimerCallback" << std::endl; 
+
+
+
+    DWORD_PTR moduleBaseAddress = GetModuleBaseAddress(mapi.pid, mapi.moduleName);  //0x7FF6546B0000 
+    if (moduleBaseAddress == 0) {
+         // std::cerr << "[ Error ]: moduleBaseAddress is null" << std::endl;
+        CloseHandle(mapi.hProcess);
+        //return 1;
+        exit(0);
+    }
+
+    DWORD_PTR initialAddress;
+
+    initialAddress = moduleBaseAddress + roomLimit_baseAddressOffset;
+    // std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
+    roomLimit_finalAddress = ReadMultiLevelPointer(mapi.hProcess, initialAddress, roomLimit_offsets);
+    // std::cout << "[address]: finalAddress: 0x" << std::hex << roomLimit_finalAddress << std::endl;
+
+    initialAddress = moduleBaseAddress + Flying_baseAddressOffset;
+    // std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
+    Flying_finalAddress = ReadMultiLevelPointer(mapi.hProcess, initialAddress, Flying_offsets);
+    // std::cout << "[address]: finalAddress: 0x" << std::hex << Flying_finalAddress << std::endl;
+
+    initialAddress = moduleBaseAddress + Unlimitedpower_baseAddressOffset;
+    // std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
+    Unlimitedpower_finalAddress = ReadMultiLevelPointer(mapi.hProcess, initialAddress, Unlimitedpower_offsets);
+    // std::cout << "[address]: finalAddress: 0x" << std::hex << Unlimitedpower_finalAddress << std::endl;
+
+    initialAddress = moduleBaseAddress + MoveSpeed_baseAddressOffset;
+    //std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
+    MoveSpeed_finalAddress = ReadMultiLevelPointer(mapi.hProcess, initialAddress, MoveSpeed_offsets);
+    //std::cout << "[address]: finalAddress: 0x" << std::hex << MoveSpeed_finalAddress << std::endl;
+
+    // Z Y X 
+    initialAddress = moduleBaseAddress + Zpos_baseAddressOffset;
+    //std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
+    Zpos_finalAddress = ReadMultiLevelPointer(mapi.hProcess, initialAddress, Zpos_offsets);
+    //std::cout << "[address]: finalAddress: 0x" << std::hex << Zpos_finalAddress << std::endl;
+
+    initialAddress = moduleBaseAddress + Xpos_baseAddressOffset;
+    //std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
+    Xpos_finalAddress = ReadMultiLevelPointer(mapi.hProcess, initialAddress, Xpos_offsets);
+    // std::cout << "[address]: finalAddress: 0x" << std::hex << Xpos_finalAddress << std::endl;
+
+    initialAddress = moduleBaseAddress + Ypos_baseAddressOffset;
+    //std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
+    Ypos_finalAddress = ReadMultiLevelPointer(mapi.hProcess, initialAddress, Ypos_offsets);
+    //std::cout << "[address]: finalAddress: 0x" << std::hex << Ypos_finalAddress << std::endl;
+
+    //其他玩家
+
+    //Ypos2F = Zpos_finalAddress + 0x4;
+    //Xpos2F = Zpos_finalAddress + 0x8;
+    //Zpos2F = Zpos_finalAddress + 0x16;
+
+
+
+
+    //  人
+    initialAddress = moduleBaseAddress + witch_BaseAddress;
+    //std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
+    witch_finalAddress = ReadMultiLevelPointer(mapi.hProcess, initialAddress, witch_offsets);
+    //std::cout << "[address]: finalAddress: 0x" << std::hex << witch_finalAddress << std::endl;
+
+    initialAddress = moduleBaseAddress + Joey_BaseAddress;
+    //std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
+    Joey_finalAddress = ReadMultiLevelPointer(mapi.hProcess, initialAddress, Joey_offsets);
+    //std::cout << "[address]: finalAddress: 0x" << std::hex << Joey_finalAddress << std::endl;
+
+    initialAddress = moduleBaseAddress + Karen_BaseAddress;
+    //std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
+    Karen_finalAddress = ReadMultiLevelPointer(mapi.hProcess, initialAddress, Karen_offsets);
+    //std::cout << "[address]: finalAddress: 0x" << std::hex << Karen_finalAddress << std::endl;
+
+    initialAddress = moduleBaseAddress + Quinn_BaseAddress;
+    //std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
+    Quinn_finalAddress = ReadMultiLevelPointer(mapi.hProcess, initialAddress, Quinn_offsets);
+    //std::cout << "[address]: finalAddress: 0x" << std::hex << Quinn_finalAddress << std::endl;
+
+    initialAddress = moduleBaseAddress + Kit_BaseAddress;
+    //std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
+    Kit_finalAddress = ReadMultiLevelPointer(mapi.hProcess, initialAddress, Kit_offsets);
+    //std::cout << "[address]: finalAddress: 0x" << std::hex << Kit_finalAddress << std::endl;
+
+    initialAddress = moduleBaseAddress + Amelia_BaseAddress;
+    //std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
+    Amelia_finalAddress = ReadMultiLevelPointer(mapi.hProcess, initialAddress, Amelia_offsets);
+    //std::cout << "[address]: finalAddress: 0x" << std::hex << Amelia_finalAddress << std::endl;
+
+    initialAddress = moduleBaseAddress + Bouli_BaseAddress;
+    //std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
+    Bouli_finalAddress = ReadMultiLevelPointer(mapi.hProcess, initialAddress, Bouli_offsets);
+    //std::cout << "[address]: finalAddress: 0x" << std::hex << Bouli_finalAddress << std::endl;
+
+    initialAddress = moduleBaseAddress + Venusin_BaseAddress;
+    //std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
+    Venusin_finalAddress = ReadMultiLevelPointer(mapi.hProcess, initialAddress, Venusin_offsets);
+    //std::cout << "[address]: finalAddress: 0x" << std::hex << Venusin_finalAddress << std::endl;
+
+    initialAddress = moduleBaseAddress + incinerator_BaseAddress;
+    //std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
+    incinerator_finalAddress = ReadMultiLevelPointer(mapi.hProcess, initialAddress, incinerator_offsets);
+    //std::cout << "[address]: finalAddress: 0x" << std::hex << incinerator_finalAddress << std::endl;
+
+    initialAddress = moduleBaseAddress + unit1_BaseAddress;
+    //std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
+    unit1_finalAddress = ReadMultiLevelPointer(mapi.hProcess, initialAddress, unit1_offsets);
+    //std::cout << "[address]: finalAddress: 0x" << std::hex << unit1_finalAddress << std::endl;
+
+    initialAddress = moduleBaseAddress + unit2_BaseAddress;
+    //std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
+    unit2_finalAddress = ReadMultiLevelPointer(mapi.hProcess, initialAddress, unit2_offsets);
+    //std::cout << "[address]: finalAddress: 0x" << std::hex << unit2_finalAddress << std::endl;
+
+    //二楼电源
+    initialAddress = moduleBaseAddress + hall_BaseAddress;
+    //std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
+    hall_finalAddress = ReadMultiLevelPointer(mapi.hProcess, initialAddress, hall_offsets);
+    //std::cout << "[address]: finalAddress: 0x" << std::hex << hall_finalAddress << std::endl;
+
+    initialAddress = moduleBaseAddress + toilet_BaseAddress;
+    //std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
+    toilet_finalAddress = ReadMultiLevelPointer(mapi.hProcess, initialAddress, toilet_offsets);
+    //std::cout << "[address]: finalAddress: 0x" << std::hex << toilet_finalAddress << std::endl;
+
+    initialAddress = moduleBaseAddress + diversion_BaseAddress;
+    //std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
+    diversion_finalAddress = ReadMultiLevelPointer(mapi.hProcess, initialAddress, diversion_offsets);
+    //std::cout << "[address]: finalAddress: 0x" << std::hex << diversion_finalAddress << std::endl;
+
+    initialAddress = moduleBaseAddress + Officearea1_BaseAddress;
+    //std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
+    Officearea1_finalAddress = ReadMultiLevelPointer(mapi.hProcess, initialAddress, Officearea1_offsets);
+    //std::cout << "[address]: finalAddress: 0x" << std::hex << Officearea1_finalAddress << std::endl;
+
+    initialAddress = moduleBaseAddress + Officearea2_BaseAddress;
+    //std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
+    Officearea2_finalAddress = ReadMultiLevelPointer(mapi.hProcess, initialAddress, Officearea2_offsets);
+    //std::cout << "[address]: finalAddress: 0x" << std::hex << Officearea2_finalAddress << std::endl;
+
+    initialAddress = moduleBaseAddress + Officearea3_BaseAddress;
+    //std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
+    Officearea3_finalAddress = ReadMultiLevelPointer(mapi.hProcess, initialAddress, Officearea3_offsets);
+    //std::cout << "[address]: finalAddress: 0x" << std::hex << Officearea3_finalAddress << std::endl;
+
+    initialAddress = moduleBaseAddress + warehouse_BaseAddress;
+    // std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
+    warehouse_finalAddress = ReadMultiLevelPointer(mapi.hProcess, initialAddress, warehouse_offsets);
+    //std::cout << "[address]: finalAddress: 0x" << std::hex << warehouse_finalAddress << std::endl;
+
+    initialAddress = moduleBaseAddress + Ghosthouse_BaseAddress;
+    //std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
+    Ghosthouse_finalAddress = ReadMultiLevelPointer(mapi.hProcess, initialAddress, Ghosthouse_offsets);
+    //std::cout << "[address]: finalAddress: 0x" << std::hex << Ghosthouse_finalAddress << std::endl;
+
+    initialAddress = moduleBaseAddress + Undergroundpassage_BaseAddress;
+    //std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
+    Undergroundpassage_finalAddress = ReadMultiLevelPointer(mapi.hProcess, initialAddress, Undergroundpassage_offsets);
+    //std::cout << "[address]: finalAddress: 0x" << std::hex << Undergroundpassage_finalAddress << std::endl;
+
+    initialAddress = moduleBaseAddress + cleanchannel_BaseAddress;
+    // std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
+    cleanchannel_finalAddress = ReadMultiLevelPointer(mapi.hProcess, initialAddress, cleanchannel_offsets);
+    //std::cout << "[address]: finalAddress: 0x" << std::hex << cleanchannel_finalAddress << std::endl;
+
+
+
+
+
+
+
+
+    //DWORD_PTR moduleBaseAddress = GetModuleBaseAddress(mapi.pid, mapi.moduleName);  //0x7FF6546B0000 
+    //if (moduleBaseAddress == 0) {
+    //    std::cerr << "[ Error ]: moduleBaseAddress is null" << std::endl;
+    //    CloseHandle(mapi.hProcess);
+    //    exit(0);
+    //}
+
+    //DWORD_PTR initialAddress;
+
+    //initialAddress = moduleBaseAddress + roomLimit_baseAddressOffset;
+    //std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
+    //roomLimit_finalAddress = ReadMultiLevelPointer(mapi.hProcess, initialAddress, roomLimit_offsets);
+    //std::cout << "[address]: finalAddress: 0x" << std::hex << roomLimit_finalAddress << std::endl;
+
+    //initialAddress = moduleBaseAddress + Flying_baseAddressOffset;
+    //std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
+    //Flying_finalAddress = ReadMultiLevelPointer(mapi.hProcess, initialAddress, Flying_offsets);
+    //std::cout << "[address]: finalAddress: 0x" << std::hex << Flying_finalAddress << std::endl;
+
+    //initialAddress = moduleBaseAddress + Unlimitedpower_baseAddressOffset;
+    //std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
+    //Unlimitedpower_finalAddress = ReadMultiLevelPointer(mapi.hProcess, initialAddress, Unlimitedpower_offsets);
+    //std::cout << "[address]: finalAddress: 0x" << std::hex << Unlimitedpower_finalAddress << std::endl;
+
+    //initialAddress = moduleBaseAddress + MoveSpeed_baseAddressOffset;
+    //std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
+    //MoveSpeed_finalAddress = ReadMultiLevelPointer(mapi.hProcess, initialAddress, MoveSpeed_offsets);
+    //std::cout << "[address]: finalAddress: 0x" << std::hex << MoveSpeed_finalAddress << std::endl;
+    //// Z Y X 
+    //initialAddress = moduleBaseAddress + Zpos_baseAddressOffset;
+    //std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
+    //Zpos_finalAddress = ReadMultiLevelPointer(mapi.hProcess, initialAddress, Zpos_offsets);
+    //std::cout << "[address]: finalAddress: 0x" << std::hex << Zpos_finalAddress << std::endl;
+
+    //initialAddress = moduleBaseAddress + Xpos_baseAddressOffset;
+    //std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
+    //Xpos_finalAddress = ReadMultiLevelPointer(mapi.hProcess, initialAddress, Xpos_offsets);
+    //std::cout << "[address]: finalAddress: 0x" << std::hex << Xpos_finalAddress << std::endl;
+
+    //initialAddress = moduleBaseAddress + Ypos_baseAddressOffset;
+    //std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
+    //Ypos_finalAddress = ReadMultiLevelPointer(mapi.hProcess, initialAddress, Ypos_offsets);
+    //std::cout << "[address]: finalAddress: 0x" << std::hex << Ypos_finalAddress << std::endl;
+
+    ////  人
+    //initialAddress = moduleBaseAddress + witch_BaseAddress;
+    //std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
+    //witch_finalAddress = ReadMultiLevelPointer(mapi.hProcess, initialAddress, witch_offsets);
+    //std::cout << "[address]: finalAddress: 0x" << std::hex << witch_finalAddress << std::endl;
+
+    //initialAddress = moduleBaseAddress + Joey_BaseAddress;
+    //std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
+    //Joey_finalAddress = ReadMultiLevelPointer(mapi.hProcess, initialAddress, Joey_offsets);
+    //std::cout << "[address]: finalAddress: 0x" << std::hex << Joey_finalAddress << std::endl;
+
+    //initialAddress = moduleBaseAddress + Karen_BaseAddress;
+    //std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
+    //Karen_finalAddress = ReadMultiLevelPointer(mapi.hProcess, initialAddress, Karen_offsets);
+    //std::cout << "[address]: finalAddress: 0x" << std::hex << Karen_finalAddress << std::endl;
+
+    //initialAddress = moduleBaseAddress + Quinn_BaseAddress;
+    //std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
+    //Quinn_finalAddress = ReadMultiLevelPointer(mapi.hProcess, initialAddress, Quinn_offsets);
+    //std::cout << "[address]: finalAddress: 0x" << std::hex << Quinn_finalAddress << std::endl;
+
+    //initialAddress = moduleBaseAddress + Kit_BaseAddress;
+    //std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
+    //Kit_finalAddress = ReadMultiLevelPointer(mapi.hProcess, initialAddress, Kit_offsets);
+    //std::cout << "[address]: finalAddress: 0x" << std::hex << Kit_finalAddress << std::endl;
+
+    //initialAddress = moduleBaseAddress + Amelia_BaseAddress;
+    //std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
+    //Amelia_finalAddress = ReadMultiLevelPointer(mapi.hProcess, initialAddress, Amelia_offsets);
+    //std::cout << "[address]: finalAddress: 0x" << std::hex << Amelia_finalAddress << std::endl;
+
+    //initialAddress = moduleBaseAddress + Bouli_BaseAddress;
+    //std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
+    //Bouli_finalAddress = ReadMultiLevelPointer(mapi.hProcess, initialAddress, Bouli_offsets);
+    //std::cout << "[address]: finalAddress: 0x" << std::hex << Bouli_finalAddress << std::endl;
+
+    //initialAddress = moduleBaseAddress + Venusin_BaseAddress;
+    //std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
+    //Venusin_finalAddress = ReadMultiLevelPointer(mapi.hProcess, initialAddress, Venusin_offsets);
+    //std::cout << "[address]: finalAddress: 0x" << std::hex << Venusin_finalAddress << std::endl;
+
+    //initialAddress = moduleBaseAddress + incinerator_BaseAddress;
+    //std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
+    //incinerator_finalAddress = ReadMultiLevelPointer(mapi.hProcess, initialAddress, incinerator_offsets);
+    //std::cout << "[address]: finalAddress: 0x" << std::hex << incinerator_finalAddress << std::endl;
+
+    //initialAddress = moduleBaseAddress + unit1_BaseAddress;
+    //std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
+    //unit1_finalAddress = ReadMultiLevelPointer(mapi.hProcess, initialAddress, unit1_offsets);
+    //std::cout << "[address]: finalAddress: 0x" << std::hex << unit1_finalAddress << std::endl;
+
+    //initialAddress = moduleBaseAddress + unit2_BaseAddress;
+    //std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
+    //unit2_finalAddress = ReadMultiLevelPointer(mapi.hProcess, initialAddress, unit2_offsets);
+    //std::cout << "[address]: finalAddress: 0x" << std::hex << unit2_finalAddress << std::endl;
+
+    ////二楼电源
+    //initialAddress = moduleBaseAddress + hall_BaseAddress;
+    //std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
+    //hall_finalAddress = ReadMultiLevelPointer(mapi.hProcess, initialAddress, hall_offsets);
+    //std::cout << "[address]: finalAddress: 0x" << std::hex << hall_finalAddress << std::endl;
+
+    //initialAddress = moduleBaseAddress + toilet_BaseAddress;
+    //std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
+    //toilet_finalAddress = ReadMultiLevelPointer(mapi.hProcess, initialAddress, toilet_offsets);
+    //std::cout << "[address]: finalAddress: 0x" << std::hex << toilet_finalAddress << std::endl;
+
+    //initialAddress = moduleBaseAddress + diversion_BaseAddress;
+    //std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
+    //diversion_finalAddress = ReadMultiLevelPointer(mapi.hProcess, initialAddress, diversion_offsets);
+    //std::cout << "[address]: finalAddress: 0x" << std::hex << diversion_finalAddress << std::endl;
+
+    //initialAddress = moduleBaseAddress + Officearea1_BaseAddress;
+    //std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
+    //Officearea1_finalAddress = ReadMultiLevelPointer(mapi.hProcess, initialAddress, Officearea1_offsets);
+    //std::cout << "[address]: finalAddress: 0x" << std::hex << Officearea1_finalAddress << std::endl;
+
+    //initialAddress = moduleBaseAddress + Officearea2_BaseAddress;
+    //std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
+    //Officearea2_finalAddress = ReadMultiLevelPointer(mapi.hProcess, initialAddress, Officearea2_offsets);
+    //std::cout << "[address]: finalAddress: 0x" << std::hex << Officearea2_finalAddress << std::endl;
+
+    //initialAddress = moduleBaseAddress + Officearea3_BaseAddress;
+    //std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
+    //Officearea3_finalAddress = ReadMultiLevelPointer(mapi.hProcess, initialAddress, Officearea3_offsets);
+    //std::cout << "[address]: finalAddress: 0x" << std::hex << Officearea3_finalAddress << std::endl;
+
+    //initialAddress = moduleBaseAddress + warehouse_BaseAddress;
+    //std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
+    //warehouse_finalAddress = ReadMultiLevelPointer(mapi.hProcess, initialAddress, warehouse_offsets);
+    //std::cout << "[address]: finalAddress: 0x" << std::hex << warehouse_finalAddress << std::endl;
+
+    //initialAddress = moduleBaseAddress + Ghosthouse_BaseAddress;
+    //std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
+    //Ghosthouse_finalAddress = ReadMultiLevelPointer(mapi.hProcess, initialAddress, Ghosthouse_offsets);
+    //std::cout << "[address]: finalAddress: 0x" << std::hex << Ghosthouse_finalAddress << std::endl;
+
+    //initialAddress = moduleBaseAddress + Undergroundpassage_BaseAddress;
+    //std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
+    //Undergroundpassage_finalAddress = ReadMultiLevelPointer(mapi.hProcess, initialAddress, Undergroundpassage_offsets);
+    //std::cout << "[address]: finalAddress: 0x" << std::hex << Undergroundpassage_finalAddress << std::endl;
+
+    //initialAddress = moduleBaseAddress + cleanchannel_BaseAddress;
+    //std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
+    //cleanchannel_finalAddress = ReadMultiLevelPointer(mapi.hProcess, initialAddress, cleanchannel_offsets);
+    //std::cout << "[address]: finalAddress: 0x" << std::hex << cleanchannel_finalAddress << std::endl;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // Main code
 int main(int, char**)
 {
@@ -115,8 +470,26 @@ int main(int, char**)
     bool show_another_window = true;
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
-    External_API mapi;
     bool Global_Flying_status = false;
+
+
+
+    UINT_PTR timerId = SetTimer(hwnd, (UINT_PTR)hwnd, 1000, TimerCallback);    //设置计时器
+
+
+
+    mapi.pid = 0;    // 目标进程ID
+    mapi.pid = GetPID("Pacify-Win64-Shipping.exe");
+    mapi.moduleName = L"Pacify-Win64-Shipping.exe";
+
+
+    mapi.hProcess = OpenProcess(PROCESS_VM_READ | PROCESS_VM_WRITE | PROCESS_VM_OPERATION, FALSE, mapi.pid);
+    if (mapi.hProcess == nullptr) {
+
+        std::cerr << "[ Error ]: hProcess is nullptr: " << GetLastError() << std::endl;
+        MessageBox(NULL, "你没有打开游戏，请先打开游戏再启动辅助", "提示", MB_OK);
+        return 1;
+    }
 
 
 
@@ -263,7 +636,7 @@ int main(int, char**)
             {
                 if (ImGui::BeginTabItem("主菜单"))
                 {
-                    if (ImGui::Button("初始化辅助")) {
+                    if (ImGui::Button("手动初始化辅助")) {
                         //External_API mapi;
 
                         mapi.pid = 0;    // 目标进程ID
@@ -288,142 +661,147 @@ int main(int, char**)
                         DWORD_PTR initialAddress;
 
                         initialAddress = moduleBaseAddress + roomLimit_baseAddressOffset;
-                        std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
+                       // std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
                         roomLimit_finalAddress = ReadMultiLevelPointer(mapi.hProcess, initialAddress, roomLimit_offsets);
-                        std::cout << "[address]: finalAddress: 0x" << std::hex << roomLimit_finalAddress << std::endl;
+                       // std::cout << "[address]: finalAddress: 0x" << std::hex << roomLimit_finalAddress << std::endl;
 
                         initialAddress = moduleBaseAddress + Flying_baseAddressOffset;
-                        std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
+                       // std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
                         Flying_finalAddress = ReadMultiLevelPointer(mapi.hProcess, initialAddress, Flying_offsets);
-                        std::cout << "[address]: finalAddress: 0x" << std::hex << Flying_finalAddress << std::endl;
+                       // std::cout << "[address]: finalAddress: 0x" << std::hex << Flying_finalAddress << std::endl;
 
                         initialAddress = moduleBaseAddress + Unlimitedpower_baseAddressOffset;
-                        std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
+                        // std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
                         Unlimitedpower_finalAddress = ReadMultiLevelPointer(mapi.hProcess, initialAddress, Unlimitedpower_offsets);
-                        std::cout << "[address]: finalAddress: 0x" << std::hex << Unlimitedpower_finalAddress << std::endl;
+                        // std::cout << "[address]: finalAddress: 0x" << std::hex << Unlimitedpower_finalAddress << std::endl;
+
+                        initialAddress = moduleBaseAddress + MoveSpeed_baseAddressOffset;
+                        //std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
+                        MoveSpeed_finalAddress = ReadMultiLevelPointer(mapi.hProcess, initialAddress, MoveSpeed_offsets);
+                        //std::cout << "[address]: finalAddress: 0x" << std::hex << MoveSpeed_finalAddress << std::endl;
 
                         // Z Y X 
                         initialAddress = moduleBaseAddress + Zpos_baseAddressOffset;
-                        std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
+                        //std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
                         Zpos_finalAddress = ReadMultiLevelPointer(mapi.hProcess, initialAddress, Zpos_offsets);
-                        std::cout << "[address]: finalAddress: 0x" << std::hex << Zpos_finalAddress << std::endl;
+                        //std::cout << "[address]: finalAddress: 0x" << std::hex << Zpos_finalAddress << std::endl;
 
                         initialAddress = moduleBaseAddress + Xpos_baseAddressOffset;
-                        std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
+                        //std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
                         Xpos_finalAddress = ReadMultiLevelPointer(mapi.hProcess, initialAddress, Xpos_offsets);
-                        std::cout << "[address]: finalAddress: 0x" << std::hex << Xpos_finalAddress << std::endl;
+                        // std::cout << "[address]: finalAddress: 0x" << std::hex << Xpos_finalAddress << std::endl;
 
                         initialAddress = moduleBaseAddress + Ypos_baseAddressOffset;
-                        std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
+                        //std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
                         Ypos_finalAddress = ReadMultiLevelPointer(mapi.hProcess, initialAddress, Ypos_offsets);
-                        std::cout << "[address]: finalAddress: 0x" << std::hex << Ypos_finalAddress << std::endl;
+                        //std::cout << "[address]: finalAddress: 0x" << std::hex << Ypos_finalAddress << std::endl;
 
                         //  人
                         initialAddress = moduleBaseAddress + witch_BaseAddress;
-                        std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
+                        //std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
                         witch_finalAddress = ReadMultiLevelPointer(mapi.hProcess, initialAddress, witch_offsets);
-                        std::cout << "[address]: finalAddress: 0x" << std::hex << witch_finalAddress << std::endl;
+                        //std::cout << "[address]: finalAddress: 0x" << std::hex << witch_finalAddress << std::endl;
 
                         initialAddress = moduleBaseAddress + Joey_BaseAddress;
-                        std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
+                        //std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
                         Joey_finalAddress = ReadMultiLevelPointer(mapi.hProcess, initialAddress, Joey_offsets);
-                        std::cout << "[address]: finalAddress: 0x" << std::hex << Joey_finalAddress << std::endl;
+                        //std::cout << "[address]: finalAddress: 0x" << std::hex << Joey_finalAddress << std::endl;
 
                         initialAddress = moduleBaseAddress + Karen_BaseAddress;
-                        std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
+                        //std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
                         Karen_finalAddress = ReadMultiLevelPointer(mapi.hProcess, initialAddress, Karen_offsets);
-                        std::cout << "[address]: finalAddress: 0x" << std::hex << Karen_finalAddress << std::endl;
+                        //std::cout << "[address]: finalAddress: 0x" << std::hex << Karen_finalAddress << std::endl;
 
                         initialAddress = moduleBaseAddress + Quinn_BaseAddress;
-                        std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
+                        //std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
                         Quinn_finalAddress = ReadMultiLevelPointer(mapi.hProcess, initialAddress, Quinn_offsets);
-                        std::cout << "[address]: finalAddress: 0x" << std::hex << Quinn_finalAddress << std::endl;
+                        //std::cout << "[address]: finalAddress: 0x" << std::hex << Quinn_finalAddress << std::endl;
 
                         initialAddress = moduleBaseAddress + Kit_BaseAddress;
-                        std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
+                        //std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
                         Kit_finalAddress = ReadMultiLevelPointer(mapi.hProcess, initialAddress, Kit_offsets);
-                        std::cout << "[address]: finalAddress: 0x" << std::hex << Kit_finalAddress << std::endl;
+                        //std::cout << "[address]: finalAddress: 0x" << std::hex << Kit_finalAddress << std::endl;
 
                         initialAddress = moduleBaseAddress + Amelia_BaseAddress;
-                        std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
+                        //std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
                         Amelia_finalAddress = ReadMultiLevelPointer(mapi.hProcess, initialAddress, Amelia_offsets);
-                        std::cout << "[address]: finalAddress: 0x" << std::hex << Amelia_finalAddress << std::endl;
+                        //std::cout << "[address]: finalAddress: 0x" << std::hex << Amelia_finalAddress << std::endl;
 
                         initialAddress = moduleBaseAddress + Bouli_BaseAddress;
-                        std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
+                        //std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
                         Bouli_finalAddress = ReadMultiLevelPointer(mapi.hProcess, initialAddress, Bouli_offsets);
-                        std::cout << "[address]: finalAddress: 0x" << std::hex << Bouli_finalAddress << std::endl;
+                        //std::cout << "[address]: finalAddress: 0x" << std::hex << Bouli_finalAddress << std::endl;
 
                         initialAddress = moduleBaseAddress + Venusin_BaseAddress;
-                        std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
+                        //std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
                         Venusin_finalAddress = ReadMultiLevelPointer(mapi.hProcess, initialAddress, Venusin_offsets);
-                        std::cout << "[address]: finalAddress: 0x" << std::hex << Venusin_finalAddress << std::endl;
+                        //std::cout << "[address]: finalAddress: 0x" << std::hex << Venusin_finalAddress << std::endl;
 
                         initialAddress = moduleBaseAddress + incinerator_BaseAddress;
-                        std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
+                        //std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
                         incinerator_finalAddress = ReadMultiLevelPointer(mapi.hProcess, initialAddress, incinerator_offsets);
-                        std::cout << "[address]: finalAddress: 0x" << std::hex << incinerator_finalAddress << std::endl;
+                        //std::cout << "[address]: finalAddress: 0x" << std::hex << incinerator_finalAddress << std::endl;
 
                         initialAddress = moduleBaseAddress + unit1_BaseAddress;
-                        std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
+                        //std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
                         unit1_finalAddress = ReadMultiLevelPointer(mapi.hProcess, initialAddress, unit1_offsets);
-                        std::cout << "[address]: finalAddress: 0x" << std::hex << unit1_finalAddress << std::endl;
+                        //std::cout << "[address]: finalAddress: 0x" << std::hex << unit1_finalAddress << std::endl;
 
                         initialAddress = moduleBaseAddress + unit2_BaseAddress;
-                        std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
+                        //std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
                         unit2_finalAddress = ReadMultiLevelPointer(mapi.hProcess, initialAddress, unit2_offsets);
-                        std::cout << "[address]: finalAddress: 0x" << std::hex << unit2_finalAddress << std::endl;
+                        //std::cout << "[address]: finalAddress: 0x" << std::hex << unit2_finalAddress << std::endl;
 
                         //二楼电源
                         initialAddress = moduleBaseAddress + hall_BaseAddress;
-                        std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
+                        //std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
                         hall_finalAddress = ReadMultiLevelPointer(mapi.hProcess, initialAddress, hall_offsets);
-                        std::cout << "[address]: finalAddress: 0x" << std::hex << hall_finalAddress << std::endl;
+                        //std::cout << "[address]: finalAddress: 0x" << std::hex << hall_finalAddress << std::endl;
 
                         initialAddress = moduleBaseAddress + toilet_BaseAddress;
-                        std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
+                        //std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
                         toilet_finalAddress = ReadMultiLevelPointer(mapi.hProcess, initialAddress, toilet_offsets);
-                        std::cout << "[address]: finalAddress: 0x" << std::hex << toilet_finalAddress << std::endl;
+                        //std::cout << "[address]: finalAddress: 0x" << std::hex << toilet_finalAddress << std::endl;
 
                         initialAddress = moduleBaseAddress + diversion_BaseAddress;
-                        std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
+                        //std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
                         diversion_finalAddress = ReadMultiLevelPointer(mapi.hProcess, initialAddress, diversion_offsets);
-                        std::cout << "[address]: finalAddress: 0x" << std::hex << diversion_finalAddress << std::endl;
+                        //std::cout << "[address]: finalAddress: 0x" << std::hex << diversion_finalAddress << std::endl;
 
                         initialAddress = moduleBaseAddress + Officearea1_BaseAddress;
-                        std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
+                        //std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
                         Officearea1_finalAddress = ReadMultiLevelPointer(mapi.hProcess, initialAddress, Officearea1_offsets);
-                        std::cout << "[address]: finalAddress: 0x" << std::hex << Officearea1_finalAddress << std::endl;
+                        //std::cout << "[address]: finalAddress: 0x" << std::hex << Officearea1_finalAddress << std::endl;
 
                         initialAddress = moduleBaseAddress + Officearea2_BaseAddress;
-                        std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
+                        //std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
                         Officearea2_finalAddress = ReadMultiLevelPointer(mapi.hProcess, initialAddress, Officearea2_offsets);
-                        std::cout << "[address]: finalAddress: 0x" << std::hex << Officearea2_finalAddress << std::endl;
+                        //std::cout << "[address]: finalAddress: 0x" << std::hex << Officearea2_finalAddress << std::endl;
 
                         initialAddress = moduleBaseAddress + Officearea3_BaseAddress;
-                        std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
+                        //std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
                         Officearea3_finalAddress = ReadMultiLevelPointer(mapi.hProcess, initialAddress, Officearea3_offsets);
-                        std::cout << "[address]: finalAddress: 0x" << std::hex << Officearea3_finalAddress << std::endl;
+                        //std::cout << "[address]: finalAddress: 0x" << std::hex << Officearea3_finalAddress << std::endl;
 
                         initialAddress = moduleBaseAddress + warehouse_BaseAddress;
-                        std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
+                        // std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
                         warehouse_finalAddress = ReadMultiLevelPointer(mapi.hProcess, initialAddress, warehouse_offsets);
-                        std::cout << "[address]: finalAddress: 0x" << std::hex << warehouse_finalAddress << std::endl;
+                        //std::cout << "[address]: finalAddress: 0x" << std::hex << warehouse_finalAddress << std::endl;
 
                         initialAddress = moduleBaseAddress + Ghosthouse_BaseAddress;
-                        std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
+                        //std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
                         Ghosthouse_finalAddress = ReadMultiLevelPointer(mapi.hProcess, initialAddress, Ghosthouse_offsets);
-                        std::cout << "[address]: finalAddress: 0x" << std::hex << Ghosthouse_finalAddress << std::endl;
+                        //std::cout << "[address]: finalAddress: 0x" << std::hex << Ghosthouse_finalAddress << std::endl;
 
                         initialAddress = moduleBaseAddress + Undergroundpassage_BaseAddress;
-                        std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
+                        //std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
                         Undergroundpassage_finalAddress = ReadMultiLevelPointer(mapi.hProcess, initialAddress, Undergroundpassage_offsets);
-                        std::cout << "[address]: finalAddress: 0x" << std::hex << Undergroundpassage_finalAddress << std::endl;
+                        //std::cout << "[address]: finalAddress: 0x" << std::hex << Undergroundpassage_finalAddress << std::endl;
 
                         initialAddress = moduleBaseAddress + cleanchannel_BaseAddress;
-                        std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
+                        // std::cout << "[address]: initialAddress: 0x" << std::hex << initialAddress << std::endl;
                         cleanchannel_finalAddress = ReadMultiLevelPointer(mapi.hProcess, initialAddress, cleanchannel_offsets);
-                        std::cout << "[address]: finalAddress: 0x" << std::hex << cleanchannel_finalAddress << std::endl;
+                        //std::cout << "[address]: finalAddress: 0x" << std::hex << cleanchannel_finalAddress << std::endl;
                     }
 
 
@@ -436,18 +814,18 @@ int main(int, char**)
                         std::cout << "Roomlimit num：" << roomLimit << std::endl;
                         ImGui::SliderInt("房间人数上限", &roomLimit, 2, 80);
                         if (WriteProcessMemory(mapi.hProcess, (BYTE*)roomLimit_finalAddress, &roomLimit, sizeof(roomLimit), nullptr)) {
-                            std::cout << "[succeed]: Changes Roomlimit num =" << roomLimit << std::endl;
+                           // std::cout << "[succeed]: Changes Roomlimit num =" << roomLimit << std::endl;
                         }
                         else {
-                            std::cerr << "[ Error ]: Changes Roomlimit num" << std::endl;
+                           // std::cerr << "[ Error ]: Changes Roomlimit num" << std::endl;
                         }
                     }
                     else {
-                        std::cerr << "[ Error ]: Read Roomlimit num" << std::endl;
+                       // std::cerr << "[ Error ]: Read Roomlimit num" << std::endl;
                     }
                     //飞天
                     if (ReadProcessMemory(mapi.hProcess, (BYTE*)Flying_finalAddress, &Flying, sizeof(Flying), nullptr)) {
-                        std::cout << "Flying num：" << Flying << std::endl;
+                        //std::cout << "Flying num：" << Flying << std::endl;
                         if (ImGui::Button("开启飞天")) {
                             Global_Flying_status = true;
                         }
@@ -465,32 +843,48 @@ int main(int, char**)
                             Flying = 1;
                         }
                         if (WriteProcessMemory(mapi.hProcess, (BYTE*)Flying_finalAddress, &Flying, sizeof(Flying), nullptr)) {
-                            std::cout << "[succeed]: Changes Flying num =" << Flying << std::endl;
+                           // std::cout << "[succeed]: Changes Flying num =" << Flying << std::endl;
                         }
                         else {
-                            std::cerr << "[ Error ]: Changes Flying num" << std::endl;
+                           // std::cerr << "[ Error ]: Changes Flying num" << std::endl;
                         }
                     }
                     else {
-                        std::cerr << "[ Error ]: Read Flying num" << std::endl;
+                       // std::cerr << "[ Error ]: Read Flying num" << std::endl;
                     }
                     //自身电池电量
                     if (ReadProcessMemory(mapi.hProcess, (BYTE*)Unlimitedpower_finalAddress, &Unlimitedpower, sizeof(Unlimitedpower), nullptr)) {
-                        std::cout << "Unlimitedpower num：" << Unlimitedpower << std::endl;
+                        //std::cout << "Unlimitedpower num：" << Unlimitedpower << std::endl;
                         if (GetAsyncKeyState(VK_CONTROL) & 0x8000) {
                             Unlimitedpower = 100;
                         }
                         ImGui::SliderInt("电池电量", &Unlimitedpower, 0, 100);
                         if (WriteProcessMemory(mapi.hProcess, (BYTE*)Unlimitedpower_finalAddress, &Unlimitedpower, sizeof(Unlimitedpower), nullptr)) {
-                            std::cout << "[succeed]: Changes Unlimitedpower num =" << Unlimitedpower << std::endl;
+                           // std::cout << "[succeed]: Changes Unlimitedpower num =" << Unlimitedpower << std::endl;
                         }
                         else {
-                            std::cerr << "[ Error ]: Changes Unlimitedpower num" << std::endl;
+                           // std::cerr << "[ Error ]: Changes Unlimitedpower num" << std::endl;
                         }
                     }
                     else {
-                        std::cerr << "[ Error ]: Read Unlimitedpower num" << std::endl;
+                       // std::cerr << "[ Error ]: Read Unlimitedpower num" << std::endl;
                     }
+
+                    //自身移动速度
+                    if (ReadProcessMemory(mapi.hProcess, (BYTE*)MoveSpeed_finalAddress, &MoveSpeed, sizeof(MoveSpeed), nullptr)) {
+                       // std::cout << "MoveSpeed num：" << MoveSpeed << std::endl;
+                        ImGui::SliderFloat("移动速度", &MoveSpeed, 100.0f, 5000.0f);
+                        if (WriteProcessMemory(mapi.hProcess, (BYTE*)MoveSpeed_finalAddress, &MoveSpeed, sizeof(MoveSpeed), nullptr)) {
+                           // std::cout << "[succeed]: Changes MoveSpeed num =" << MoveSpeed << std::endl;
+                        }
+                        else {
+                           // std::cerr << "[ Error ]: Changes MoveSpeed num" << std::endl;
+                        }
+                    }
+                    else {
+                       // std::cerr << "[ Error ]: Read MoveSpeed num" << std::endl;
+                    }
+
                     //Zpos
                     if (ReadProcessMemory(mapi.hProcess, (BYTE*)Zpos_finalAddress, &Zpos, sizeof(Zpos), nullptr)) {
                         if (GetAsyncKeyState(VK_SPACE) & 0x8000) {
@@ -516,42 +910,45 @@ int main(int, char**)
 
                         ImGui::SliderFloat("高度", &Zpos, -1000.0f, 1000.0f);
                         if (WriteProcessMemory(mapi.hProcess, (BYTE*)Zpos_finalAddress, &Zpos, sizeof(Zpos), nullptr)) {
-                            std::cout << "[succeed]: Changes Zpos num =" << Zpos << std::endl;
+                           // std::cout << "[succeed]: Changes Zpos num =" << Zpos << std::endl;
                         }
                         else {
-                            std::cerr << "[ Error ]: Changes Zpos num" << std::endl;
+                           // std::cerr << "[ Error ]: Changes Zpos num" << std::endl;
                         }
                     }
                     else {
-                        std::cerr << "[ Error ]: Read Zpos num" << std::endl;
+                       // std::cerr << "[ Error ]: Read Zpos num" << std::endl;
                     }
                     //Xpos
                     if (ReadProcessMemory(mapi.hProcess, (BYTE*)Xpos_finalAddress, &Xpos, sizeof(Xpos), nullptr)) {
                         if (WriteProcessMemory(mapi.hProcess, (BYTE*)Xpos_finalAddress, &Xpos, sizeof(Xpos), nullptr)) {
-                            std::cout << "[succeed]: Changes Xpos num =" << Xpos << std::endl;
+                           // std::cout << "[succeed]: Changes Xpos num =" << Xpos << std::endl;
                         }
                         else {
-                            std::cerr << "[ Error ]: Changes Xpos num" << std::endl;
+                           // std::cerr << "[ Error ]: Changes Xpos num" << std::endl;
                         }
                     }
                     else {
-                        std::cerr << "[ Error ]: Read Xpos num" << std::endl;
+                       // std::cerr << "[ Error ]: Read Xpos num" << std::endl;
                     }
                     //Ypos
                     if (ReadProcessMemory(mapi.hProcess, (BYTE*)Ypos_finalAddress, &Ypos, sizeof(Ypos), nullptr)) {
                         if (WriteProcessMemory(mapi.hProcess, (BYTE*)Ypos_finalAddress, &Ypos, sizeof(Ypos), nullptr)) {
-                            std::cout << "[succeed]: Changes Ypos num =" << Ypos << std::endl;
+                           // std::cout << "[succeed]: Changes Ypos num =" << Ypos << std::endl;
                         }
                         else {
-                            std::cerr << "[ Error ]: Changes Ypos num" << std::endl;
+                           // std::cerr << "[ Error ]: Changes Ypos num" << std::endl;
                         }
                     }
                     else {
-                        std::cerr << "[ Error ]: Read Ypos num" << std::endl;
+                       // std::cerr << "[ Error ]: Read Ypos num" << std::endl;
                     }
 
                     ImGui::Text("快捷键小键盘 ，上是开启飞天, 下是关闭飞天");
                     ImGui::Text("空格向上飞，Ctrl向下飞，鼠标侧键 m1 m2 分别向上和向下快飞");
+
+
+
 
 
                     //Flying
@@ -561,304 +958,418 @@ int main(int, char**)
                     ImGui::Value("Y轴坐标:", Ypos);
 
 
-                    //右内 女巫艾格尼丝	房间电源 
-                    if (ReadProcessMemory(mapi.hProcess, (BYTE*)witch_finalAddress, &witch, sizeof(witch), nullptr)) {
-                        std::cout << "Roomlimit num：" << roomLimit << std::endl;
-                        if (WriteProcessMemory(mapi.hProcess, (BYTE*)witch_finalAddress, &witch, sizeof(witch), nullptr)) {
-                            std::cout << "[succeed]: Changes witch num =" << witch << std::endl;
+
+
+
+
+
+
+
+
+
+
+
+                    if (ReadProcessMemory(mapi.hProcess, (BYTE*)Zpos_finalAddress + 0x4, &Ypos2F, sizeof(Ypos2F), nullptr)) {
+                        if (WriteProcessMemory(mapi.hProcess, (BYTE*)Zpos_finalAddress + 0x4, &Ypos2F, sizeof(Ypos2F), nullptr)) {
+                            
                         }
                         else {
-                            std::cerr << "[ Error ]: Changes witch num" << std::endl;
+                            
                         }
                     }
                     else {
-                        std::cerr << "[ Error ]: Read witch num" << std::endl;
+                       
+                    }
+                    if (ReadProcessMemory(mapi.hProcess, (BYTE*)Zpos_finalAddress + 0x8, &Xpos2F, sizeof(Xpos2F), nullptr)) {
+                        if (WriteProcessMemory(mapi.hProcess, (BYTE*)Zpos_finalAddress + 0x8, &Xpos2F, sizeof(Xpos2F), nullptr)) {
+
+                        }
+                        else {
+
+                        }
+                    }
+                    else {
+
+                    }
+                    if (ReadProcessMemory(mapi.hProcess, (BYTE*)Zpos_finalAddress + 0x12, &Zpos2F, sizeof(Zpos2F), nullptr)) {
+                        if (WriteProcessMemory(mapi.hProcess, (BYTE*)Zpos_finalAddress + 0x12, &Zpos2F, sizeof(Zpos2F), nullptr)) {
+
+                        }
+                        else {
+
+                        }
+                    }
+                    else {
+
+                    }
+
+                    //std::cout << "1.===================" << std::endl;
+                    //std::cout << "Y:" << Ypos << std::endl;
+                    //std::cout << "X:" << Xpos << std::endl;
+                    //std::cout << "Z:" << Zpos << std::endl;
+                    //std::cout << "2.===================" << std::endl;
+                    //std::cout << "Y:" << Ypos2F << std::endl;
+                    //std::cout << "X:" << Xpos2F << std::endl;
+                    //std::cout << "Z:" << Zpos2F << std::endl;
+                    //std::cout << "===================" << std::endl;
+                    //system("clear");
+
+
+
+
+
+                    //右内 女巫艾格尼丝	房间电源 
+                    if (ReadProcessMemory(mapi.hProcess, (BYTE*)witch_finalAddress, &witch, sizeof(witch), nullptr)) {
+                       // std::cout << "Roomlimit num：" << roomLimit << std::endl;
+                        if (WriteProcessMemory(mapi.hProcess, (BYTE*)witch_finalAddress, &witch, sizeof(witch), nullptr)) {
+                           // std::cout << "[succeed]: Changes witch num =" << witch << std::endl;
+                        }
+                        else {
+                           // std::cerr << "[ Error ]: Changes witch num" << std::endl;
+                        }
+                    }
+                    else {
+                       // std::cerr << "[ Error ]: Read witch num" << std::endl;
                     }
                     //右内 乔伊			房间电源
                     if (ReadProcessMemory(mapi.hProcess, (BYTE*)Joey_finalAddress, &Joey, sizeof(Joey), nullptr)) {
-                        std::cout << "Roomlimit num：" << roomLimit << std::endl;
+                       // std::cout << "Roomlimit num：" << roomLimit << std::endl;
                         if (WriteProcessMemory(mapi.hProcess, (BYTE*)Joey_finalAddress, &Joey, sizeof(Joey), nullptr)) {
-                            std::cout << "[succeed]: Changes Joey num =" << Joey << std::endl;
+                           // std::cout << "[succeed]: Changes Joey num =" << Joey << std::endl;
                         }
                         else {
-                            std::cerr << "[ Error ]: Changes Joey num" << std::endl;
+                           // std::cerr << "[ Error ]: Changes Joey num" << std::endl;
                         }
                     }
                     else {
-                        std::cerr << "[ Error ]: Read Joey num" << std::endl;
+                         // std::cerr << "[ Error ]: Read Joey num" << std::endl;
                     }
                     //右外 凯伦
                     if (ReadProcessMemory(mapi.hProcess, (BYTE*)Karen_finalAddress, &Karen, sizeof(Karen), nullptr)) {
-                        std::cout << "Roomlimit num：" << roomLimit << std::endl;
+                       // std::cout << "Roomlimit num：" << roomLimit << std::endl;
                         if (WriteProcessMemory(mapi.hProcess, (BYTE*)Karen_finalAddress, &Karen, sizeof(Karen), nullptr)) {
-                            std::cout << "[succeed]: Changes Karen num =" << Karen << std::endl;
+                           // std::cout << "[succeed]: Changes Karen num =" << Karen << std::endl;
                         }
                         else {
-                            std::cerr << "[ Error ]: Changes Karen num" << std::endl;
+                           // std::cerr << "[ Error ]: Changes Karen num" << std::endl;
                         }
                     }
                     else {
-                        std::cerr << "[ Error ]: Read Karen num" << std::endl;
+                       // std::cerr << "[ Error ]: Read Karen num" << std::endl;
                     }
                     //右外 奎恩
                     if (ReadProcessMemory(mapi.hProcess, (BYTE*)Quinn_finalAddress, &Quinn, sizeof(Quinn), nullptr)) {
-                        std::cout << "Roomlimit num：" << roomLimit << std::endl;
+                         // std::cout << "Roomlimit num：" << roomLimit << std::endl;
                         if (WriteProcessMemory(mapi.hProcess, (BYTE*)Quinn_finalAddress, &Quinn, sizeof(Quinn), nullptr)) {
-                            std::cout << "[succeed]: Changes Quinn num =" << Quinn << std::endl;
+                             // std::cout << "[succeed]: Changes Quinn num =" << Quinn << std::endl;
                         }
                         else {
-                            std::cerr << "[ Error ]: Changes Quinn num" << std::endl;
+                             // std::cerr << "[ Error ]: Changes Quinn num" << std::endl;
                         }
                     }
                     else {
-                        std::cerr << "[ Error ]: Read Quinn num" << std::endl;
+                         // std::cerr << "[ Error ]: Read Quinn num" << std::endl;
                     }
                     //左外 吉特
                     if (ReadProcessMemory(mapi.hProcess, (BYTE*)Kit_finalAddress, &Kit, sizeof(Kit), nullptr)) {
-                        std::cout << "Roomlimit num：" << roomLimit << std::endl;
+                         // std::cout << "Roomlimit num：" << roomLimit << std::endl;
                         if (WriteProcessMemory(mapi.hProcess, (BYTE*)Kit_finalAddress, &Kit, sizeof(Kit), nullptr)) {
-                            std::cout << "[succeed]: Changes Kit num =" << Kit << std::endl;
+                             // std::cout << "[succeed]: Changes Kit num =" << Kit << std::endl;
                         }
                         else {
-                            std::cerr << "[ Error ]: Changes Kit num" << std::endl;
+                             // std::cerr << "[ Error ]: Changes Kit num" << std::endl;
                         }
                     }
                     else {
-                        std::cerr << "[ Error ]: Read Kit num" << std::endl;
+                         // std::cerr << "[ Error ]: Read Kit num" << std::endl;
                     }
                     //左外 艾米利亚
                     if (ReadProcessMemory(mapi.hProcess, (BYTE*)Amelia_finalAddress, &Amelia, sizeof(Amelia), nullptr)) {
-                        std::cout << "Roomlimit num：" << roomLimit << std::endl;
+                         // std::cout << "Roomlimit num：" << roomLimit << std::endl;
                         if (WriteProcessMemory(mapi.hProcess, (BYTE*)Amelia_finalAddress, &Amelia, sizeof(Amelia), nullptr)) {
-                            std::cout << "[succeed]: Changes Amelia num =" << Amelia << std::endl;
+                             // std::cout << "[succeed]: Changes Amelia num =" << Amelia << std::endl;
                         }
                         else {
-                            std::cerr << "[ Error ]: Changes Amelia num" << std::endl;
+                             // std::cerr << "[ Error ]: Changes Amelia num" << std::endl;
                         }
                     }
                     else {
-                        std::cerr << "[ Error ]: Read Amelia num" << std::endl;
+                         // std::cerr << "[ Error ]: Read Amelia num" << std::endl;
                     }
                     //左内 布利
                     if (ReadProcessMemory(mapi.hProcess, (BYTE*)Bouli_finalAddress, &Bouli, sizeof(Bouli), nullptr)) {
-                        std::cout << "Roomlimit num：" << roomLimit << std::endl;
+                         // std::cout << "Roomlimit num：" << roomLimit << std::endl;
                         if (WriteProcessMemory(mapi.hProcess, (BYTE*)Bouli_finalAddress, &Bouli, sizeof(Bouli), nullptr)) {
-                            std::cout << "[succeed]: Changes Bouli num =" << Bouli << std::endl;
+                             // std::cout << "[succeed]: Changes Bouli num =" << Bouli << std::endl;
                         }
                         else {
-                            std::cerr << "[ Error ]: Changes Bouli num" << std::endl;
+                             // std::cerr << "[ Error ]: Changes Bouli num" << std::endl;
                         }
                     }
                     else {
-                        std::cerr << "[ Error ]: Read Bouli num" << std::endl;
+                         // std::cerr << "[ Error ]: Read Bouli num" << std::endl;
                     }
                     //左内 维妮辛	
                     if (ReadProcessMemory(mapi.hProcess, (BYTE*)Venusin_finalAddress, &Venusin, sizeof(Venusin), nullptr)) {
-                        std::cout << "Roomlimit num：" << roomLimit << std::endl;
+                         // std::cout << "Roomlimit num：" << roomLimit << std::endl;
                         if (WriteProcessMemory(mapi.hProcess, (BYTE*)Venusin_finalAddress, &Venusin, sizeof(Venusin), nullptr)) {
-                            std::cout << "[succeed]: Changes Venusin num =" << Venusin << std::endl;
+                             // std::cout << "[succeed]: Changes Venusin num =" << Venusin << std::endl;
                         }
                         else {
-                            std::cerr << "[ Error ]: Changes Venusin num" << std::endl;
+                             // std::cerr << "[ Error ]: Changes Venusin num" << std::endl;
                         }
                     }
                     else {
-                        std::cerr << "[ Error ]: Read Venusin num" << std::endl;
+                         // std::cerr << "[ Error ]: Read Venusin num" << std::endl;
                     }
                     //焚烧炉电源
                     if (ReadProcessMemory(mapi.hProcess, (BYTE*)incinerator_finalAddress, &incinerator, sizeof(incinerator), nullptr)) {
-                        std::cout << "Roomlimit num：" << roomLimit << std::endl;
+                         // std::cout << "Roomlimit num：" << roomLimit << std::endl;
                         if (WriteProcessMemory(mapi.hProcess, (BYTE*)incinerator_finalAddress, &incinerator, sizeof(incinerator), nullptr)) {
-                            std::cout << "[succeed]: Changes incinerator num =" << incinerator << std::endl;
+                             // std::cout << "[succeed]: Changes incinerator num =" << incinerator << std::endl;
                         }
                         else {
-                            std::cerr << "[ Error ]: Changes incinerator num" << std::endl;
+                             // std::cerr << "[ Error ]: Changes incinerator num" << std::endl;
                         }
                     }
                     else {
-                        std::cerr << "[ Error ]: Read incinerator num" << std::endl;
+                         // std::cerr << "[ Error ]: Read incinerator num" << std::endl;
                     }
                     //小单元电源1
                     if (ReadProcessMemory(mapi.hProcess, (BYTE*)unit1_finalAddress, &unit1, sizeof(unit1), nullptr)) {
-                        std::cout << "Roomlimit num：" << roomLimit << std::endl;
+                         // std::cout << "Roomlimit num：" << roomLimit << std::endl;
                         if (WriteProcessMemory(mapi.hProcess, (BYTE*)unit1_finalAddress, &unit1, sizeof(unit1), nullptr)) {
-                            std::cout << "[succeed]: Changes unit1 num =" << unit1 << std::endl;
+                             // std::cout << "[succeed]: Changes unit1 num =" << unit1 << std::endl;
                         }
                         else {
-                            std::cerr << "[ Error ]: Changes unit1 num" << std::endl;
+                             // std::cerr << "[ Error ]: Changes unit1 num" << std::endl;
                         }
                     }
                     else {
-                        std::cerr << "[ Error ]: Read unit1 num" << std::endl;
+                         // std::cerr << "[ Error ]: Read unit1 num" << std::endl;
                     }
                     //小单元电源2
                     if (ReadProcessMemory(mapi.hProcess, (BYTE*)unit2_finalAddress, &unit2, sizeof(unit2), nullptr)) {
-                        std::cout << "Roomlimit num：" << roomLimit << std::endl;
+                         // std::cout << "Roomlimit num：" << roomLimit << std::endl;
                         if (WriteProcessMemory(mapi.hProcess, (BYTE*)unit2_finalAddress, &unit2, sizeof(unit2), nullptr)) {
-                            std::cout << "[succeed]: Changes unit2 num =" << unit2 << std::endl;
+                             // std::cout << "[succeed]: Changes unit2 num =" << unit2 << std::endl;
                         }
                         else {
-                            std::cerr << "[ Error ]: Changes unit2 num" << std::endl;
+                             // std::cerr << "[ Error ]: Changes unit2 num" << std::endl;
                         }
                     }
                     else {
-                        std::cerr << "[ Error ]: Read unit2 num" << std::endl;
+                         // std::cerr << "[ Error ]: Read unit2 num" << std::endl;
                     }
                     //大厅电源
                     if (ReadProcessMemory(mapi.hProcess, (BYTE*)hall_finalAddress, &hall, sizeof(hall), nullptr)) {
-                        std::cout << "Roomlimit num：" << roomLimit << std::endl;
+                         // std::cout << "Roomlimit num：" << roomLimit << std::endl;
                         if (WriteProcessMemory(mapi.hProcess, (BYTE*)hall_finalAddress, &hall, sizeof(hall), nullptr)) {
-                            std::cout << "[succeed]: Changes hall num =" << hall << std::endl;
+                             // std::cout << "[succeed]: Changes hall num =" << hall << std::endl;
                         }
                         else {
-                            std::cerr << "[ Error ]: Changes hall num" << std::endl;
+                             // std::cerr << "[ Error ]: Changes hall num" << std::endl;
                         }
                     }
                     else {
-                        std::cerr << "[ Error ]: Read hall num" << std::endl;
+                         // std::cerr << "[ Error ]: Read hall num" << std::endl;
                     }
                     //卫生间电源
                     if (ReadProcessMemory(mapi.hProcess, (BYTE*)toilet_finalAddress, &toilet, sizeof(toilet), nullptr)) {
-                        std::cout << "Roomlimit num：" << roomLimit << std::endl;
+                         // std::cout << "Roomlimit num：" << roomLimit << std::endl;
                         if (WriteProcessMemory(mapi.hProcess, (BYTE*)toilet_finalAddress, &toilet, sizeof(toilet), nullptr)) {
-                            std::cout << "[succeed]: Changes toilet num =" << toilet << std::endl;
+                             // std::cout << "[succeed]: Changes toilet num =" << toilet << std::endl;
                         }
                         else {
-                            std::cerr << "[ Error ]: Changes toilet num" << std::endl;
+                             // std::cerr << "[ Error ]: Changes toilet num" << std::endl;
                         }
                     }
                     else {
-                        std::cerr << "[ Error ]: Read toilet num" << std::endl;
+                         // std::cerr << "[ Error ]: Read toilet num" << std::endl;
                     }
                     //娱乐房电源
                     if (ReadProcessMemory(mapi.hProcess, (BYTE*)diversion_finalAddress, &diversion, sizeof(diversion), nullptr)) {
-                        std::cout << "Roomlimit num：" << roomLimit << std::endl;
+                         // std::cout << "Roomlimit num：" << roomLimit << std::endl;
                         if (WriteProcessMemory(mapi.hProcess, (BYTE*)diversion_finalAddress, &diversion, sizeof(diversion), nullptr)) {
-                            std::cout << "[succeed]: Changes diversion num =" << diversion << std::endl;
+                             // std::cout << "[succeed]: Changes diversion num =" << diversion << std::endl;
                         }
                         else {
-                            std::cerr << "[ Error ]: Changes diversion num" << std::endl;
+                             // std::cerr << "[ Error ]: Changes diversion num" << std::endl;
                         }
                     }
                     else {
-                        std::cerr << "[ Error ]: Read diversion num" << std::endl;
+                         // std::cerr << "[ Error ]: Read diversion num" << std::endl;
                     }
                     //办公区1电源
                     if (ReadProcessMemory(mapi.hProcess, (BYTE*)Officearea1_finalAddress, &Officearea1, sizeof(Officearea1), nullptr)) {
-                        std::cout << "Roomlimit num：" << roomLimit << std::endl;
+                         // std::cout << "Roomlimit num：" << roomLimit << std::endl;
                         if (WriteProcessMemory(mapi.hProcess, (BYTE*)Officearea1_finalAddress, &Officearea1, sizeof(Officearea1), nullptr)) {
-                            std::cout << "[succeed]: Changes Officearea1 num =" << Officearea1 << std::endl;
+                             // std::cout << "[succeed]: Changes Officearea1 num =" << Officearea1 << std::endl;
                         }
                         else {
-                            std::cerr << "[ Error ]: Changes Officearea1 num" << std::endl;
+                             // std::cerr << "[ Error ]: Changes Officearea1 num" << std::endl;
                         }
                     }
                     else {
-                        std::cerr << "[ Error ]: Read Officearea1 num" << std::endl;
+                         // std::cerr << "[ Error ]: Read Officearea1 num" << std::endl;
                     }
                     //办公区2电源
                     if (ReadProcessMemory(mapi.hProcess, (BYTE*)Officearea2_finalAddress, &Officearea2, sizeof(Officearea2), nullptr)) {
-                        std::cout << "Roomlimit num：" << roomLimit << std::endl;
+                         // std::cout << "Roomlimit num：" << roomLimit << std::endl;
                         if (WriteProcessMemory(mapi.hProcess, (BYTE*)Officearea2_finalAddress, &Officearea2, sizeof(Officearea2), nullptr)) {
-                            std::cout << "[succeed]: Changes Officearea2 num =" << Officearea2 << std::endl;
+                             // std::cout << "[succeed]: Changes Officearea2 num =" << Officearea2 << std::endl;
                         }
                         else {
-                            std::cerr << "[ Error ]: Changes Officearea2 num" << std::endl;
+                             // std::cerr << "[ Error ]: Changes Officearea2 num" << std::endl;
                         }
                     }
                     else {
-                        std::cerr << "[ Error ]: Read Officearea2 num" << std::endl;
+                         // std::cerr << "[ Error ]: Read Officearea2 num" << std::endl;
                     }
                     //办公区3电源
                     if (ReadProcessMemory(mapi.hProcess, (BYTE*)Officearea3_finalAddress, &Officearea3, sizeof(Officearea3), nullptr)) {
-                        std::cout << "Roomlimit num：" << roomLimit << std::endl;
+                         // std::cout << "Roomlimit num：" << roomLimit << std::endl;
                         if (WriteProcessMemory(mapi.hProcess, (BYTE*)Officearea3_finalAddress, &Officearea3, sizeof(Officearea3), nullptr)) {
-                            std::cout << "[succeed]: Changes Officearea3 num =" << Officearea3 << std::endl;
+                             // std::cout << "[succeed]: Changes Officearea3 num =" << Officearea3 << std::endl;
                         }
                         else {
-                            std::cerr << "[ Error ]: Changes Officearea3 num" << std::endl;
+                             // std::cerr << "[ Error ]: Changes Officearea3 num" << std::endl;
                         }
                     }
                     else {
-                        std::cerr << "[ Error ]: Read Officearea3 num" << std::endl;
+                         // std::cerr << "[ Error ]: Read Officearea3 num" << std::endl;
                     }
                     //仓库电源
                     if (ReadProcessMemory(mapi.hProcess, (BYTE*)warehouse_finalAddress, &warehouse, sizeof(warehouse), nullptr)) {
-                        std::cout << "Roomlimit num：" << roomLimit << std::endl;
+                         // std::cout << "Roomlimit num：" << roomLimit << std::endl;
                         if (WriteProcessMemory(mapi.hProcess, (BYTE*)warehouse_finalAddress, &warehouse, sizeof(warehouse), nullptr)) {
-                            std::cout << "[succeed]: Changes warehouse num =" << warehouse << std::endl;
+                             // std::cout << "[succeed]: Changes warehouse num =" << warehouse << std::endl;
                         }
                         else {
-                            std::cerr << "[ Error ]: Changes warehouse num" << std::endl;
+                             // std::cerr << "[ Error ]: Changes warehouse num" << std::endl;
                         }
                     }
                     else {
-                        std::cerr << "[ Error ]: Read warehouse num" << std::endl;
+                         // std::cerr << "[ Error ]: Read warehouse num" << std::endl;
                     }
                     //鬼房电源
                     if (ReadProcessMemory(mapi.hProcess, (BYTE*)Ghosthouse_finalAddress, &Ghosthouse, sizeof(Ghosthouse), nullptr)) {
-                        std::cout << "Roomlimit num：" << roomLimit << std::endl;
+                         // std::cout << "Roomlimit num：" << roomLimit << std::endl;
                         if (WriteProcessMemory(mapi.hProcess, (BYTE*)Ghosthouse_finalAddress, &Ghosthouse, sizeof(Ghosthouse), nullptr)) {
-                            std::cout << "[succeed]: Changes Ghosthouse num =" << Ghosthouse << std::endl;
+                             // std::cout << "[succeed]: Changes Ghosthouse num =" << Ghosthouse << std::endl;
                         }
                         else {
-                            std::cerr << "[ Error ]: Changes Ghosthouse num" << std::endl;
+                             // std::cerr << "[ Error ]: Changes Ghosthouse num" << std::endl;
                         }
                     }
                     else {
-                        std::cerr << "[ Error ]: Read Ghosthouse num" << std::endl;
+                         // std::cerr << "[ Error ]: Read Ghosthouse num" << std::endl;
                     }
                     //地下通道电源
                     if (ReadProcessMemory(mapi.hProcess, (BYTE*)Undergroundpassage_finalAddress, &Undergroundpassage, sizeof(Undergroundpassage), nullptr)) {
-                        std::cout << "Roomlimit num：" << roomLimit << std::endl;
+                         // std::cout << "Roomlimit num：" << roomLimit << std::endl;
                         if (WriteProcessMemory(mapi.hProcess, (BYTE*)Undergroundpassage_finalAddress, &Undergroundpassage, sizeof(Undergroundpassage), nullptr)) {
-                            std::cout << "[succeed]: Changes Undergroundpassage num =" << Undergroundpassage << std::endl;
+                             // std::cout << "[succeed]: Changes Undergroundpassage num =" << Undergroundpassage << std::endl;
                         }
                         else {
-                            std::cerr << "[ Error ]: Changes Undergroundpassage num" << std::endl;
+                             // std::cerr << "[ Error ]: Changes Undergroundpassage num" << std::endl;
                         }
                     }
                     else {
-                        std::cerr << "[ Error ]: Read Undergroundpassage num" << std::endl;
+                         // std::cerr << "[ Error ]: Read Undergroundpassage num" << std::endl;
                     }
                     //净化通道电源
                     if (ReadProcessMemory(mapi.hProcess, (BYTE*)cleanchannel_finalAddress, &cleanchannel, sizeof(cleanchannel), nullptr)) {
-                        std::cout << "Roomlimit num：" << roomLimit << std::endl;
+                         // std::cout << "Roomlimit num：" << roomLimit << std::endl;
                         if (WriteProcessMemory(mapi.hProcess, (BYTE*)cleanchannel_finalAddress, &cleanchannel, sizeof(cleanchannel), nullptr)) {
-                            std::cout << "[succeed]: Changes cleanchannel num =" << cleanchannel << std::endl;
+                             // std::cout << "[succeed]: Changes cleanchannel num =" << cleanchannel << std::endl;
                         }
                         else {
-                            std::cerr << "[ Error ]: Changes cleanchannel num" << std::endl;
+                             // std::cerr << "[ Error ]: Changes cleanchannel num" << std::endl;
                         }
                     }
                     else {
-                        std::cerr << "[ Error ]: Read cleanchannel num" << std::endl;
+                         // std::cerr << "[ Error ]: Read cleanchannel num" << std::endl;
                     }
 
+                    ImGui::Spacing();
+                    ImGui::Spacing();
+
+                    ImGui::AlignTextToFramePadding();
+                    ImGui::Columns(5, "布局");
+                    ImGui::PushItemWidth(150);
+                    ImGui::Text("左外");
                     ImGui::TextColored(color_Changes(Kit), "左外 吉特	: %d", Kit);
                     ImGui::TextColored(color_Changes(Amelia), "左外 艾米利亚	: %d", Amelia);
+                    ImGui::NextColumn();
+                    ImGui::PopItemWidth();
+                    ImGui::PushItemWidth(150);
+                    ImGui::Text("左内");
                     ImGui::TextColored(color_Changes(Bouli), "左内 布利	: %d", Bouli);
                     ImGui::TextColored(color_Changes(Venusin), "左内 维妮辛	: %d", Venusin);
-                    ImGui::TextColored(color_Changes(witch), "右内 女巫	: %d", witch);
-                    ImGui::TextColored(color_Changes(Joey), "右内 乔伊	: %d", Joey);
-                    ImGui::TextColored(color_Changes(Karen), "右外 凯伦	: %d", Karen);
-                    ImGui::TextColored(color_Changes(Quinn), "右外 奎恩	: %d", Quinn);
-                    ImGui::Separator();
-                    ImGui::TextColored(color_Changes(incinerator), "焚烧炉电源	: %d", incinerator);
+                    ImGui::NextColumn();
+                    ImGui::PopItemWidth();
+                    ImGui::PushItemWidth(150);
+                    ImGui::Text("小单元");
                     ImGui::TextColored(color_Changes(unit1), "小单元电源1	: %d", unit1);
                     ImGui::TextColored(color_Changes(unit2), "小单元电源2	: %d", unit2);
+                    ImGui::Spacing();
+                    ImGui::Spacing();
+                    ImGui::PopItemWidth();
+                    ImGui::PushItemWidth(150);
+                    ImGui::Text("中央电源");
+                    ImGui::NextColumn();
+                    ImGui::PopItemWidth();
+                    ImGui::PushItemWidth(150);
+                    ImGui::Text("右内");
+                    ImGui::TextColored(color_Changes(witch), "右内 女巫	: %d", witch);
+                    ImGui::TextColored(color_Changes(Joey), "右内 乔伊	: %d", Joey);
+                    ImGui::NextColumn();
+                    ImGui::PopItemWidth();
+                    ImGui::PushItemWidth(150);
+                    ImGui::Text("右外");
+                    ImGui::TextColored(color_Changes(Karen), "右外 凯伦	: %d", Karen);
+                    ImGui::TextColored(color_Changes(Quinn), "右外 奎恩	: %d", Quinn);
+                    ImGui::PopItemWidth();
+                    ImGui::Columns(1); // 结束列布局
+
+
+                    
+
+
+                    //ImGui::TextColored(color_Changes(Kit), "左外 吉特	: %d", Kit);
+                    //ImGui::TextColored(color_Changes(Amelia), "左外 艾米利亚	: %d", Amelia);
+                    //ImGui::TextColored(color_Changes(Bouli), "左内 布利	: %d", Bouli);
+                    //ImGui::TextColored(color_Changes(Venusin), "左内 维妮辛	: %d", Venusin);
+                    //ImGui::TextColored(color_Changes(witch), "右内 女巫	: %d", witch);
+                    //ImGui::TextColored(color_Changes(Joey), "右内 乔伊	: %d", Joey);
+                    //ImGui::TextColored(color_Changes(Karen), "右外 凯伦	: %d", Karen);
+                    //ImGui::TextColored(color_Changes(Quinn), "右外 奎恩	: %d", Quinn);
+                    ImGui::Separator();
+                    ImGui::Spacing();
+                    ImGui::Spacing();
+                    ImGui::TextColored(color_Changes(incinerator), "焚烧炉电源	: %d", incinerator);
+                    //ImGui::TextColored(color_Changes(unit1), "小单元电源1	: %d", unit1);
+                    //ImGui::TextColored(color_Changes(unit2), "小单元电源2	: %d", unit2);
                     ImGui::Separator();
                     ImGui::Text("二楼电源");
+
+                    ImGui::Columns(2, "布局");
                     ImGui::TextColored(color_Changes(hall), "大厅电源	: %d", hall);
                     ImGui::TextColored(color_Changes(toilet), "净化通道电源: %d", toilet);
                     ImGui::TextColored(color_Changes(diversion), "娱乐房电源: %d", diversion);
                     ImGui::TextColored(color_Changes(Officearea1), "办公区1电源: %d", Officearea1);
                     ImGui::TextColored(color_Changes(Officearea2), "办公区2电源: %d", Officearea2);
                     ImGui::TextColored(color_Changes(Officearea3), "办公区3电源: %d", Officearea3);
+                    ImGui::NextColumn();
                     ImGui::TextColored(color_Changes(warehouse), "仓库电源: %d", warehouse);
                     ImGui::TextColored(color_Changes(Ghosthouse), "鬼房电源: %d", Ghosthouse);
                     ImGui::TextColored(color_Changes(Undergroundpassage), "地下通道电源	: %d", Undergroundpassage);
                     ImGui::TextColored(color_Changes(cleanchannel), "卫生间电源: %d", cleanchannel);
+                    ImGui::Columns(1);
+
+
+
                     ImGui::Separator();
                     ImGui::Text("传送功能");
                     if (ImGui::Button("资源区"))
@@ -867,49 +1378,49 @@ int main(int, char**)
                         if (ReadProcessMemory(mapi.hProcess, (BYTE*)Zpos_finalAddress, &Zpos, sizeof(Zpos), nullptr)) {
                             Zpos = 1022.016;
                             if (WriteProcessMemory(mapi.hProcess, (BYTE*)Zpos_finalAddress, &Zpos, sizeof(Zpos), nullptr)) {
-                                std::cout << "[succeed]: Changes Zpos num =" << Zpos << std::endl;
+                                 // std::cout << "[succeed]: Changes Zpos num =" << Zpos << std::endl;
                             }
                             else {
-                                std::cerr << "[ Error ]: Changes Zpos num" << std::endl;
+                                 // std::cerr << "[ Error ]: Changes Zpos num" << std::endl;
                             }
                         }
                         else {
-                            std::cerr << "[ Error ]: Read Zpos num" << std::endl;
+                             // std::cerr << "[ Error ]: Read Zpos num" << std::endl;
                         }
                         //Xpos
                         if (ReadProcessMemory(mapi.hProcess, (BYTE*)Xpos_finalAddress, &Xpos, sizeof(Xpos), nullptr)) {
                             Xpos = 3793.890;
                             if (WriteProcessMemory(mapi.hProcess, (BYTE*)Xpos_finalAddress, &Xpos, sizeof(Xpos), nullptr)) {
-                                std::cout << "[succeed]: Changes Xpos num =" << Xpos << std::endl;
+                                 // std::cout << "[succeed]: Changes Xpos num =" << Xpos << std::endl;
                             }
                             else {
-                                std::cerr << "[ Error ]: Changes Xpos num" << std::endl;
+                                 // std::cerr << "[ Error ]: Changes Xpos num" << std::endl;
                             }
                         }
                         else {
-                            std::cerr << "[ Error ]: Read Xpos num" << std::endl;
+                             // std::cerr << "[ Error ]: Read Xpos num" << std::endl;
                         }
                         //Ypos
                         if (ReadProcessMemory(mapi.hProcess, (BYTE*)Ypos_finalAddress, &Ypos, sizeof(Ypos), nullptr)) {
                             Ypos = 5046.566;
                             if (WriteProcessMemory(mapi.hProcess, (BYTE*)Ypos_finalAddress, &Ypos, sizeof(Ypos), nullptr)) {
-                                std::cout << "[succeed]: Changes Ypos num =" << Ypos << std::endl;
+                                 // std::cout << "[succeed]: Changes Ypos num =" << Ypos << std::endl;
                             }
                             else {
-                                std::cerr << "[ Error ]: Changes Ypos num" << std::endl;
+                                 // std::cerr << "[ Error ]: Changes Ypos num" << std::endl;
                             }
                         }
                         else {
-                            std::cerr << "[ Error ]: Read Ypos num" << std::endl;
+                             // std::cerr << "[ Error ]: Read Ypos num" << std::endl;
                         }
-                    }
+                    }ImGui::SameLine();
                     //if (ImGui::Button("焚烧炉"))
                     //{
                     //    //Zpos
                     //    if (ReadProcessMemory(mapi.hProcess, (BYTE*)Zpos_finalAddress, &Zpos, sizeof(Zpos), nullptr)) {
                     //        Zpos = -251.381;
                     //        if (WriteProcessMemory(mapi.hProcess, (BYTE*)Zpos_finalAddress, &Zpos, sizeof(Zpos), nullptr)) {
-                    //            std::cout << "[succeed]: Changes Roomlimit num =" << Zpos << std::endl;
+                    //             // std::cout << "[succeed]: Changes Roomlimit num =" << Zpos << std::endl;
                     //        }
                     //        else {
                     //            std::cerr << "[ Error ]: Changes Roomlimit num" << std::endl;
@@ -953,79 +1464,79 @@ int main(int, char**)
                                 std::cout << "[succeed]: Changes Zpos num =" << Zpos << std::endl;
                             }
                             else {
-                                std::cerr << "[ Error ]: Changes Zpos num" << std::endl;
+                                 // std::cerr << "[ Error ]: Changes Zpos num" << std::endl;
                             }
                         }
                         else {
-                            std::cerr << "[ Error ]: Read Zpos num" << std::endl;
+                             // std::cerr << "[ Error ]: Read Zpos num" << std::endl;
                         }
                         //Xpos
                         if (ReadProcessMemory(mapi.hProcess, (BYTE*)Xpos_finalAddress, &Xpos, sizeof(Xpos), nullptr)) {
                             Xpos = 941.970;
                             if (WriteProcessMemory(mapi.hProcess, (BYTE*)Xpos_finalAddress, &Xpos, sizeof(Xpos), nullptr)) {
-                                std::cout << "[succeed]: Changes Xpos num =" << Xpos << std::endl;
+                                 // std::cout << "[succeed]: Changes Xpos num =" << Xpos << std::endl;
                             }
                             else {
-                                std::cerr << "[ Error ]: Changes Xpos num" << std::endl;
+                                 // std::cerr << "[ Error ]: Changes Xpos num" << std::endl;
                             }
                         }
                         else {
-                            std::cerr << "[ Error ]: Read Xpos num" << std::endl;
+                             // std::cerr << "[ Error ]: Read Xpos num" << std::endl;
                         }
                         //Ypos
                         if (ReadProcessMemory(mapi.hProcess, (BYTE*)Ypos_finalAddress, &Ypos, sizeof(Ypos), nullptr)) {
                             Ypos = 6383.516;
                             if (WriteProcessMemory(mapi.hProcess, (BYTE*)Ypos_finalAddress, &Ypos, sizeof(Ypos), nullptr)) {
-                                std::cout << "[succeed]: Changes Ypos num =" << Ypos << std::endl;
+                                 // std::cout << "[succeed]: Changes Ypos num =" << Ypos << std::endl;
                             }
                             else {
-                                std::cerr << "[ Error ]: Changes Ypos num" << std::endl;
+                                 // std::cerr << "[ Error ]: Changes Ypos num" << std::endl;
                             }
                         }
                         else {
-                            std::cerr << "[ Error ]: Read Ypos num" << std::endl;
+                             // std::cerr << "[ Error ]: Read Ypos num" << std::endl;
                         }
-                    }
+                    }ImGui::SameLine();
                     if (ImGui::Button("地下充电房"))
                     {
                         //Zpos
                         if (ReadProcessMemory(mapi.hProcess, (BYTE*)Zpos_finalAddress, &Zpos, sizeof(Zpos), nullptr)) {
                             Zpos = 159.955;
                             if (WriteProcessMemory(mapi.hProcess, (BYTE*)Zpos_finalAddress, &Zpos, sizeof(Zpos), nullptr)) {
-                                std::cout << "[succeed]: Changes Zpos num =" << Zpos << std::endl;
+                                 // std::cout << "[succeed]: Changes Zpos num =" << Zpos << std::endl;
                             }
                             else {
-                                std::cerr << "[ Error ]: Changes Zpos num" << std::endl;
+                                 // std::cerr << "[ Error ]: Changes Zpos num" << std::endl;
                             }
                         }
                         else {
-                            std::cerr << "[ Error ]: Read Zpos num" << std::endl;
+                             // std::cerr << "[ Error ]: Read Zpos num" << std::endl;
                         }
                         //Xpos
                         if (ReadProcessMemory(mapi.hProcess, (BYTE*)Xpos_finalAddress, &Xpos, sizeof(Xpos), nullptr)) {
                             Xpos = 1882.329;
                             if (WriteProcessMemory(mapi.hProcess, (BYTE*)Xpos_finalAddress, &Xpos, sizeof(Xpos), nullptr)) {
-                                std::cout << "[succeed]: Changes Xpos num =" << Xpos << std::endl;
+                                 // std::cout << "[succeed]: Changes Xpos num =" << Xpos << std::endl;
                             }
                             else {
-                                std::cerr << "[ Error ]: Changes Xpos num" << std::endl;
+                                 // std::cerr << "[ Error ]: Changes Xpos num" << std::endl;
                             }
                         }
                         else {
-                            std::cerr << "[ Error ]: Read Xpos num" << std::endl;
+                             // std::cerr << "[ Error ]: Read Xpos num" << std::endl;
                         }
                         //Ypos
                         if (ReadProcessMemory(mapi.hProcess, (BYTE*)Ypos_finalAddress, &Ypos, sizeof(Ypos), nullptr)) {
                             Ypos = 2863.134;
                             if (WriteProcessMemory(mapi.hProcess, (BYTE*)Ypos_finalAddress, &Ypos, sizeof(Ypos), nullptr)) {
-                                std::cout << "[succeed]: Changes Ypos num =" << Ypos << std::endl;
+                                 // std::cout << "[succeed]: Changes Ypos num =" << Ypos << std::endl;
                             }
                             else {
-                                std::cerr << "[ Error ]: Changes Ypos num" << std::endl;
+                                 // std::cerr << "[ Error ]: Changes Ypos num" << std::endl;
                             }
                         }
                         else {
-                            std::cerr << "[ Error ]: Read Ypos num" << std::endl;
+                             // std::cerr << "[ Error ]: Read Ypos num" << std::endl;
                         }
                     }
 

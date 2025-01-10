@@ -20,6 +20,11 @@ std::vector<DWORD> Unlimitedpower_offsets       = { 0x30, 0x2B0, 0xE30, 0xA90 };
 DWORD_PTR Unlimitedpower_finalAddress;
 int Unlimitedpower                              = 0;
 
+DWORD_PTR MoveSpeed_baseAddressOffset           = 0x03625880;                                   //玩家移动速度数据地址
+std::vector<DWORD> MoveSpeed_offsets            = { 0x0 ,0x240 ,0x280 ,0x58 ,0x18C };
+DWORD_PTR MoveSpeed_finalAddress;
+float MoveSpeed                                   = 250.0f;   //行走速度：250 ，奔跑速度：500
+
 /// <summary>
 /// 本地玩家坐标
 /// </summary>
@@ -179,11 +184,11 @@ DWORD_PTR ReadMultiLevelPointer(HANDLE hProcess, DWORD_PTR baseAddress, const st
     DWORD_PTR address = baseAddress;
     for (size_t i = 0; i < offsets.size(); ++i) {
         if (!ReadProcessMemory(hProcess, (BYTE*)address, &address, sizeof(address), nullptr)) {
-            std::cerr << "读取内存地址失败: 0x" << std::hex << address << std::endl;
+            //std::cerr << "读取内存地址失败: 0x" << std::hex << address << std::endl;
             return 0;
         }
         address += offsets[i];
-        std::cout << "解引用第 " << i + 1 << " 级: 地址 = 0x" << std::hex << address << std::endl;
+       // std::cout << "解引用第 " << i + 1 << " 级: 地址 = 0x" << std::hex << address << std::endl;
     }
     return address;
 }

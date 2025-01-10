@@ -23,6 +23,11 @@ extern std::vector<DWORD> Unlimitedpower_offsets;
 extern DWORD_PTR Unlimitedpower_finalAddress;
 extern int Unlimitedpower;
 
+extern DWORD_PTR MoveSpeed_baseAddressOffset;               //玩家移动速度数据地址
+extern std::vector<DWORD> MoveSpeed_offsets;
+extern DWORD_PTR MoveSpeed_finalAddress;
+extern float MoveSpeed;
+
 extern DWORD_PTR Zpos_baseAddressOffset;					//Zpos 坐标
 extern std::vector<DWORD> Zpos_offsets;
 extern DWORD_PTR Zpos_finalAddress;
